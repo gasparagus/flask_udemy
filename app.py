@@ -1,10 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
+api = Api(app)
 
 stores = [
     {
-        'name': 'My Store Name',
+        'name': 'My Wonderful Store',
         'items': [
             {
                 'name': 'My Item',
@@ -14,6 +16,9 @@ stores = [
     }
 ]
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/store', methods=['POST'])
 def create_store():
@@ -50,7 +55,7 @@ def create_item_in_store(name):
             return jsonify(new_item)
     return jsonify({'message': 'store not found'})
 
-@app.route('/store/<string:item>')
+@app.route('/store/<string:name>/item')
 def get_item_in_store(name):
     for store in stores:
         if store['name'] == name:
