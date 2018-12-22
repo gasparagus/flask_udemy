@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'EiEiO'
 api = Api(app)
 
-@app.before_first_request # Creates table in app.config unless table already exists
+@app.before_first_request
 def create_tables():
     db.create_all()
 
